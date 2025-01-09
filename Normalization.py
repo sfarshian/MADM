@@ -34,7 +34,3 @@ def max_min_normalization(dm: pd.DataFrame):
             n[col_name] /= n[col_name].max()
     return n.round(3)
 
-
-print(criteria_types)
-print(decision_matrix)
-print(max_min_normalization(dm=decision_matrix))
