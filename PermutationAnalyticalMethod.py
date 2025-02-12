@@ -27,7 +27,9 @@ class PermutationMethod:
         self.concordance_matrices = {}
         self.permutation_scores = {}
 
-    def calculate_concordance_matrix(self, permuted_alternatives: tuple) -> pd.DataFrame:
+    def calculate_concordance_matrix(
+        self, permuted_alternatives: tuple
+    ) -> pd.DataFrame:
         """
         Calculate the concordance matrix for a given permutation of alternatives.
 
@@ -118,7 +120,7 @@ class PermutationMethod:
     def write_output_file(self):
         """
         Write the concordance matrices and scores for each permutation to an output file.
-        
+
          The final line of the output contains the best permutation and its corresponding score.
         """
         with open("output.txt", "w") as file:
@@ -126,16 +128,26 @@ class PermutationMethod:
                 file.write(
                     f"""Permutation:\t{permutation:}\n{concordance_matrix.to_string()}\nScore:\t{self.permutation_scores.get(permutation)}\n{"*" * 50}\n"""
                 )
+            best_combination, best_score = max(
+                self.permutation_scores.items(), key=lambda x: x[1]
+            )
+            file.write(
+                f"""\n\nBest Combination is {best_combination} with the score of {best_score}"""
+            )
 
 
 if __name__ == "__main__":
-    N = pd.read_csv("D_matrix.csv", skiprows=1)
-    N.index = [f"A{i+1}" for i in range(len(N))]
-    W = pd.read_csv("D_matrix.csv", nrows=1, header=None).iloc[0].tolist()
-    N = N.drop("OP", axis=1)
-    print("Normalized Decision Matrix:")
-    print(N)
-    print("Weights:")
-    print(W)
-    pm = PermutationMethod(normalized_matrix=N, weights=W)
+    n_matrix = pd.DataFrame(
+        {
+            "X1": [0.8, 1, 0.72, 0.88],
+            "X2": [0.56, 1, 0.74, 0.67],
+            "X3": [0.95, 0.86, 1, 0.95],
+            "X4": [0.82, 0.69, 1, 0.9],
+            "X5": [0.71, 0.43, 1, 0.71],
+            "X6": [1, 0.56, 0.78, 0.56],
+        },
+        index=["A1", "A2", "A3", "A4"],
+    )
+    weights_data = [0.2, 0.1, 0.1, 0.1, 0.2, 0.3]
+    pm = PermutationMethod(normalized_matrix=n_matrix, weights=weights_data)
     pm.run_calculations()
