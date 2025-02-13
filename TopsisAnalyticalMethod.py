@@ -28,8 +28,9 @@ class TopsisMethod:
 
     def run(self):
         self.weighted_matrix = self.calculate_weighted_matrix()
+        print(f"Weighted Matrix(V):\n{self.weighted_matrix}")
         self.find_ideal_solutions()
-        print(f"Positive Ideal Solution:\n{self.a_plus}\n")
+        print(f"\nPositive Ideal Solution:\n{self.a_plus}\n")
         print(f"Negative Ideal Solution:\n{self.a_minus}\n")
         for alternative in self.weighted_matrix.index:
             self.distances[alternative] = self.calculate_euclidean_distance(
@@ -42,6 +43,7 @@ class TopsisMethod:
         self.closeness = dict(
             sorted(self.closeness.items(), key=lambda item: item[1], reverse=True)
         )
+        print(f"Ranking Based on Closeness:\n{self.closeness}")
 
     def calculate_closeness(self, distance: tuple):
         # distance[0] = d+
@@ -111,7 +113,6 @@ if __name__ == "__main__":
         [["+", "+", "+", "+", "-"]],
         columns=n_matrix.columns,
     )
-    print(criteria_types)
     tm = TopsisMethod(
         normalized_matrix=n_matrix, weights=weights_data, criteria_types=criteria_types
     )
