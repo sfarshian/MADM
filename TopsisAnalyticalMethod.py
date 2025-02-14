@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 from enum import Enum
 from math import sqrt
