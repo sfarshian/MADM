@@ -59,7 +59,7 @@ class TopsisMethod:
         self.weighted_matrix = self.calculate_weighted_matrix()
         print(f"Weighted Matrix(V):\n{self.weighted_matrix}")
 
-        self.find_ideal_solutions()
+        self.get_ideal_solutions()
         print(f"\nPositive Ideal Solution:\n{self.a_plus}\n")
         print(f"Negative Ideal Solution:\n{self.a_minus}\n")
 
